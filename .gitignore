@@ -58,3 +58,8 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+BeautyTycoon/Library/
+BeautyTycoon/Logs/
+BeautyTycoon/obj/
+BeautyTycoon/Temp/
+BeautyTycoon/UserSettings/
