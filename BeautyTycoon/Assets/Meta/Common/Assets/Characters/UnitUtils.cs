@@ -1,4 +1,6 @@
+using Meta.Common.Assets.Characters.MainCharacter;
 using Meta.Common.Assets.Characters.Visitor_default;
+using Meta.Common.InputHandling;
 using UnityEngine;
 
 namespace BT.Meta.Common.Characters.Utils
@@ -9,6 +11,8 @@ namespace BT.Meta.Common.Characters.Utils
         {
             GameObject mainCharacter = Resources.Load<GameObject>("MainCharacter");
             unit = new CUnit() { Transform = mainCharacter.transform };
+            CKeyboardInputData inputData = new CKeyboardInputData();
+            CTouchInputListener listener = new CTouchInputListener();
         }
 
         public static void SummonVisitor(out CUnit unit, out CChoiceVariant choice)
