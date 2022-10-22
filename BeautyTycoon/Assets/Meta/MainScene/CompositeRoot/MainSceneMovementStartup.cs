@@ -1,6 +1,7 @@
 using Core.CompositeRoot;
 using Leopotam.Ecs;
 using Meta.Common.Assets.Characters;
+using Meta.Common.Assets.Characters.Movement;
 using Meta.Common.Assets.Characters.MovementApply;
 using Meta.Common.Assets.Characters.MovementLogic;
 using Meta.Common.Assets.Characters.MovementLogic.CellMovement;
@@ -12,6 +13,7 @@ namespace Meta.MainScene.CompositeRoot
         IFixedUpdateLogicPartStartup<MainSceneMovementStartup>
     {
         private ICellMovementCalculator _calculator;
+        
         public MainSceneMovementStartup()
         {
             _calculator = null;
@@ -19,7 +21,8 @@ namespace Meta.MainScene.CompositeRoot
         
         public MainSceneMovementStartup AddUpdateSystems(EcsSystems systems)
         {
-            
+            systems
+                .Add(new SConvertTouchToCellMovement());
             return this;
         }
 
