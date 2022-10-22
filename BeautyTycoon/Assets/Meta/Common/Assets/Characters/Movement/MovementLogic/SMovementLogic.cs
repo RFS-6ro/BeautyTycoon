@@ -17,12 +17,14 @@ namespace Meta.Common.Assets.Characters.MovementLogic
             
             foreach (var entityId in _filter)
             {
+                ref var entity = ref _filter.GetEntity(entityId);
+                
                 ref CUnit unit = ref _filter.Get1(entityId);
                 ref CTargetCell targetCellData = ref _filter.Get2(entityId);
 
                 Vector2Int currentCell = unit.Transform.position.GetCellByPosition();
 
-                Vector3 nextFrameDelta = _cellMovementCalculator.GetNextFrameDelta(currentCell, targetCellData.Cell);
+                Vector3 nextFrameDelta = _cellMovementCalculator.GetNextFrameDelta(entity, currentCell, targetCellData.Cell);
                 
                 ref var movementDelta = ref _filter.GetEntity(entityId).Get<CMovementDelta>();
                 movementDelta.Delta = nextFrameDelta;

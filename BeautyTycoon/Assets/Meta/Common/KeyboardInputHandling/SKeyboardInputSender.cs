@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Meta.Common.InputHandling
 {
-    public class SInputSender : IEcsRunSystem
+    public class SKeyboardInputSender : IEcsRunSystem
     {
         private EcsFilter<CKeyboardInputData> _filter;
         
