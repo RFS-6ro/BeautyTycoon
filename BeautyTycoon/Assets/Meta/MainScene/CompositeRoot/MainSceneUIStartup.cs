@@ -1,5 +1,6 @@
 using Core.CompositeRoot;
 using Leopotam.Ecs;
+using Meta.Common.UI.Input;
 
 namespace Meta.MainScene.CompositeRoot
 {
@@ -7,8 +8,10 @@ namespace Meta.MainScene.CompositeRoot
     {
         public MainSceneUIStartup()
         {
-            
+            CanvasInputListener = null;
         }
+        
+        public CanvasInputListener CanvasInputListener { get; private set; }
         
         public MainSceneUIStartup AddUpdateSystems(EcsSystems systems)
         {

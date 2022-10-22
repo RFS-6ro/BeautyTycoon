@@ -6,6 +6,8 @@ namespace Meta.MainScene.CompositeRoot
     {
         protected override void AddLogicParts()
         {
+            MainSceneUIStartup uiStartup = new MainSceneUIStartup();
+            
             new MainSceneManagersStartup()
                 .AddUpdateSystems(_updateSystems)
                 .AddFixedUpdateSystems(_fixedUpdateSystems)
@@ -17,14 +19,14 @@ namespace Meta.MainScene.CompositeRoot
             new MainSceneUnitsStartup()
                 .AddUpdateSystems(_updateSystems);
 
-            new MainSceneInputHandlingStartup()
+            new MainSceneInputHandlingStartup(uiStartup.CanvasInputListener)
                 .AddUpdateSystems(_updateSystems);
             
             new MainSceneMovementStartup()
                 .AddUpdateSystems(_updateSystems)
                 .AddFixedUpdateSystems(_fixedUpdateSystems);
 
-            new MainSceneUIStartup()
+            uiStartup
                 .AddUpdateSystems(_updateSystems);
         }
     }

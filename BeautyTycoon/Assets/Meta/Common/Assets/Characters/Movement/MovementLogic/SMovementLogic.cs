@@ -22,12 +22,13 @@ namespace Meta.Common.Assets.Characters.MovementLogic
                 ref CUnit unit = ref _filter.Get1(entityId);
                 ref CTargetCell targetCellData = ref _filter.Get2(entityId);
 
-                Vector2Int currentCell = unit.Transform.position.GetCellByPosition();
-
-                Vector3 nextFrameDelta = _cellMovementCalculator.GetNextFrameDelta(entity, currentCell, targetCellData.Cell);
+                if (!unit.Transform.position.TryGetCellByWorldPosition(out Vector2Int currentCell))
+                {
+                    currentCell = unit.Transform.position.GetClosestEmptyCell();
+                }
                 
                 ref var movementDelta = ref _filter.GetEntity(entityId).Get<CMovementDelta>();
-                movementDelta.Delta = nextFrameDelta;
+                movementDelta.Delta = _cellMovementCalculator.GetNextFrameDelta(entity, currentCell, targetCellData.Cell);
             }
         }
     }
