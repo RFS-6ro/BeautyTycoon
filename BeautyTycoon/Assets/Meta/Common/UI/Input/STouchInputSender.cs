@@ -12,6 +12,8 @@ namespace Meta.Common.UI.Input
 
         public void Init()
         {
+            if (_canvasInputListener == null) { return; }
+            
             _canvasInputListener.OnClick += HandleSimpleClick;
             _canvasInputListener.OnDoubleClick += HandleDoubleClick;
         }

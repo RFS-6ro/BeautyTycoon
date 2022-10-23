@@ -31,8 +31,8 @@ namespace Meta.MainScene.CompositeRoot
             systems
                 .Add(new SMovementLogic())
                 .Add(new SUnitMoveApply())
-                .OneFrame<CMovementDelta>()
-                .Inject(_calculator);
+                .OneFrame<CMovementDelta>();
+                // .Inject(_calculator);
             return this;
         }
     }
