@@ -13,10 +13,7 @@ namespace Meta.Common.Assets.Characters.MovementLogic
         
         public void Run()
         {
-            if (_cellMovementCalculator == null || !_cellMovementCalculator.IsAssigned)
-            {
-                return;
-            }
+            if (_cellMovementCalculator == null) { return; }
 
             foreach (var entityId in _filter)
             {
@@ -25,7 +22,7 @@ namespace Meta.Common.Assets.Characters.MovementLogic
                 ref CUnit unit = ref _filter.Get1(entityId);
                 ref CTargetCell targetCellData = ref _filter.Get2(entityId);
 
-                if (!unit.Transform.position.TryGetCellByWorldPosition(out Vector2Int currentCell))
+                if (!unit.Transform.position.TryGetCellByWorldPosition(out Vector3Int currentCell))
                 {
                     currentCell = unit.Transform.position.GetClosestEmptyCell();
                 }

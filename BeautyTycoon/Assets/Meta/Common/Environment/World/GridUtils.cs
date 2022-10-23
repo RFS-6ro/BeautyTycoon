@@ -15,5 +15,8 @@ namespace Meta.Common.Environment.World
                 }
             }
         }
+
+        public static bool Inside<T>(this T[,] grid, int x, int y) =>
+            x < grid.GetLength(0) && y < grid.GetLength(1);
     }
 }

@@ -7,14 +7,14 @@ namespace Meta.MainScene.CompositeRoot
 {
     public class MainSceneUIStartup : IUpdateLogicPartStartup<MainSceneUIStartup>
     {
+        public readonly Canvas UI;
+        public readonly CanvasInputListener CanvasInputListener;
+        
         public MainSceneUIStartup()
         {
-            UI = Resources.Load<Canvas>("Canvas");
+            UI = Object.Instantiate(Resources.Load<Canvas>("Canvas"));
             CanvasInputListener = UI.GetComponentInChildren<CanvasInputListener>();
         }
-        
-        public Canvas UI { get; private set; }
-        public CanvasInputListener CanvasInputListener { get; private set; }
         
         public MainSceneUIStartup AddUpdateSystems(EcsSystems systems)
         {

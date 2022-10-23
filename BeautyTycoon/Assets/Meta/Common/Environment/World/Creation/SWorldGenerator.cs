@@ -40,7 +40,8 @@ namespace Meta.Common.World.Creation
             
             tile.name = $"Cell [{x}, {y}]";
             tile.transform.position = startPoint + _grid.GetCellCenterWorld(new Vector3Int(x, y, 0));;
-            
+            tile.transform.parent = _grid.transform;
+
             return tile;
         }
 

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4668952015657297855}
   - component: {fileID: 8776476060760538477}
+  - component: {fileID: 8366448275754093368}
   m_Layer: 0
   m_Name: WalkableCell
   m_TagString: Untagged
@@ -82,3 +83,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8366448275754093368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7258815183110235603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7618d522aa5414cb33cbddff2771d32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
