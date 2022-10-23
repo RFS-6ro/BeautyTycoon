@@ -1,6 +1,7 @@
 using Core.CompositeRoot;
 using Leopotam.Ecs;
 using Meta.Common.Assets.Characters.MovementLogic.CellMovement;
+using Meta.Common.Environment;
 using Meta.Common.Environment.World.Destruction;
 using Meta.Common.World.Creation;
 using UnityEngine;
@@ -10,12 +11,14 @@ namespace Meta.MainScene.CompositeRoot
     public class MainSceneEnvironmentStartup : IUpdateLogicPartStartup<MainSceneEnvironmentStartup>
     {
         public readonly MapMask Mask;
+        public readonly MetricsConfiguration Metrics;
         public readonly TileFactory Factory;
         public readonly UnityEngine.Grid Grid;
         
         public MainSceneEnvironmentStartup()
         {
             Mask = Resources.Load<MapMask>(nameof(MapMask));
+            Metrics = Resources.Load<MetricsConfiguration>(nameof(MetricsConfiguration));
             Factory = new TileFactory();
             Grid = Object.Instantiate(Resources.Load<UnityEngine.Grid>("Isometric Grid"));
             
@@ -31,7 +34,7 @@ namespace Meta.MainScene.CompositeRoot
                 .Inject(Factory)
                 .Inject(Grid);
             
-            new MainSceneDailyScheduleStartup()
+            new MainSceneMetricsStartup()
                 .AddUpdateSystems(systems);
             
             new MainSceneWorkingToolsStartup()

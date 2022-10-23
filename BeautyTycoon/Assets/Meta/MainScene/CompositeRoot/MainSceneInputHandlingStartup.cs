@@ -8,11 +8,11 @@ namespace Meta.MainScene.CompositeRoot
     public class MainSceneInputHandlingStartup : 
         IUpdateLogicPartStartup<MainSceneInputHandlingStartup>
     {
-        private readonly CanvasInputListener _canvasInputListener;
+        private readonly PanelTouchInputListener _panelTouchInputListener;
 
-        public MainSceneInputHandlingStartup(CanvasInputListener canvasInputListener)
+        public MainSceneInputHandlingStartup(PanelTouchInputListener panelTouchInputListener)
         {
-            _canvasInputListener = canvasInputListener;
+            _panelTouchInputListener = panelTouchInputListener;
         }
         
         public MainSceneInputHandlingStartup AddUpdateSystems(EcsSystems systems)
@@ -22,7 +22,7 @@ namespace Meta.MainScene.CompositeRoot
                 .Add(new SKeyboardInputSender())
                 .OneFrame<CTap>()
                 .OneFrame<CDoubleTap>()
-                .Inject(_canvasInputListener);
+                .Inject(_panelTouchInputListener);
             return this;
         }
     }

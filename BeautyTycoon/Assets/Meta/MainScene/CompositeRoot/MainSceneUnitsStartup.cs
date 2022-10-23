@@ -13,7 +13,8 @@ namespace Meta.MainScene.CompositeRoot
                 .Add(new SMainCharacterCreate())
                 .Add(new SVisitorCreate())
                 .OneFrame<CRequestVisitor>()
-                .OneFrame<CRequestDeleteVisitor>();
+                .OneFrame<CRequestDeleteVisitor>()
+                .OneFrame<CVisitorRequestProcess>();
             return this;
         }
     }
