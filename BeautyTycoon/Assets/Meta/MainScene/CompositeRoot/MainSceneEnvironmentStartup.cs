@@ -31,6 +31,9 @@ namespace Meta.MainScene.CompositeRoot
                 .Inject(Factory)
                 .Inject(Grid);
             
+            new MainSceneDailyScheduleStartup()
+                .AddUpdateSystems(systems);
+            
             new MainSceneWorkingToolsStartup()
                 .AddUpdateSystems(systems);
 
