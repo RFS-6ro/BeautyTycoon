@@ -9,7 +9,7 @@ using Meta.MainScene.UI.VisitorChoseMenu.VisitorChoicePanel;
 
 namespace Meta.MainScene.UI.VisitorChoseMenu
 {
-    public class SGUIVisitorChoicePresenter : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
+    public class SGUIVisitorChoicePresenter : IEcsInitSystem, IEcsRunSystem
     {
         private MetricsConfiguration _metricsConfiguration;
         private GUIVisitorChoiceMenuView _visitorChoiceMenu;
@@ -18,7 +18,6 @@ namespace Meta.MainScene.UI.VisitorChoseMenu
 
         public void Init()
         {
-            _visitorChoiceMenu.OnChoiceConfirmedEvent += HideMenu;
             HideMenu();
         }
         
@@ -63,6 +62,8 @@ namespace Meta.MainScene.UI.VisitorChoseMenu
         {
             ref CReputationChange reputationChange = ref entity.Get<CReputationChange>();
             reputationChange.Delta = _metricsConfiguration.FailedOrderReputation;
+            
+            HideMenu();
         }
 
         private void HandleDeclineChoice(GUIVisitorChoiсePanelView choiсePanelView)
@@ -77,14 +78,8 @@ namespace Meta.MainScene.UI.VisitorChoseMenu
             
             ref CBalanceChange balanceChange = ref entity.Get<CBalanceChange>();
             balanceChange.Delta = _metricsConfiguration.OrderRevenue;   
-        }
-
-        public void Destroy()
-        {
-            if (_visitorChoiceMenu != null)
-            {
-                _visitorChoiceMenu.OnChoiceConfirmedEvent -= HideMenu;
-            }
+            
+            HideMenu();
         }
     }
 }
