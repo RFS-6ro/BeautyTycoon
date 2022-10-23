@@ -6,11 +6,11 @@ namespace Meta.Common.Environment.DailySchedule
     [CreateAssetMenu(fileName = "TimeConfiguration", menuName = "Environment/WorldConfigs/TimeConfiguration", order = 3)]
     public class WorldTimeConfiguration : ScriptableObject
     {
-        public SimpleTimeType ShiftStartTime;
+        public SimpleTimeType ShiftStartTime = new SimpleTimeType(10, 0);
 
-        public SimpleTimeType ShiftEndTime;
+        public SimpleTimeType ShiftEndTime = new SimpleTimeType(20, 0);
 
-        public int ShiftDurationInSecondsRealtime;
+        public int ShiftDurationInSecondsRealtime = 300;
         
         public int TimeUpdateTickRateInSeconds = 5;
 

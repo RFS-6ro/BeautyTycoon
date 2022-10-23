@@ -19,8 +19,8 @@ namespace BT.Core.UI.View
         
         public int SiblingIndex => _transform.GetSiblingIndex();
 		
+        //TODO: consider more effective way to handle show state
         public bool IsActive => gameObject.activeSelf;
-
         public bool IsShown => gameObject.activeInHierarchy && IsActive;
         
         public void Activate() => gameObject.SetActive(true);

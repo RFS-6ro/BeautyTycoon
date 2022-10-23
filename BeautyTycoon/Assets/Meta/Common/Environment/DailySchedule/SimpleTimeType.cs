@@ -11,6 +11,12 @@ namespace Meta.Common.Environment.DailySchedule
         public int Hour;
         public int Minute;
 
+        public SimpleTimeType(int hour, int minute)
+        {
+            Hour = hour;
+            Minute = minute;
+        }
+        
         public void AddHours(int hours)
         {
             Hour = (Hour + hours) % HOURS_MAX;
@@ -30,7 +36,7 @@ namespace Meta.Common.Environment.DailySchedule
         
         public string ToString24Hours()
         {
-            return $"{Hour % HOURS_MAX} : {Minute % MINUTES_MAX}";
+            return $"{Hour % HOURS_MAX}:{FormatMinutes()}";
         }
         
         public string ToString12Hours()
@@ -52,15 +58,21 @@ namespace Meta.Common.Environment.DailySchedule
                 postfix = "PM";
             }
 
-            return $"{hour12} : {Minute % MINUTES_MAX} {postfix}";
+            return $"{hour12}:{FormatMinutes()} {postfix}";
+        }
+
+        private string FormatMinutes()
+        {
+            int minutes = Minute % MINUTES_MAX;
+            
+            if (minutes == 0) { return "00"; }
+
+            return minutes.ToString();
         }
 
         public SimpleTimeType Clone()
         {
-            SimpleTimeType time = new SimpleTimeType();
-            time.Hour = Hour;
-            time.Minute = Minute;
-            return time;
+            return new SimpleTimeType(Hour, Minute);
         }
     }
 }

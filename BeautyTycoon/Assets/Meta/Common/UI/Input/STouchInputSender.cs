@@ -6,19 +6,19 @@ namespace Meta.Common.UI.Input
 {
     public class STouchInputSender : IEcsInitSystem, IEcsDestroySystem
     {
-        private CanvasInputListener _canvasInputListener;
+        private PanelTouchInputListener _panelTouchInputListener;
         
         private EcsFilter<CTouchInputListener> _filter;
 
         public void Init()
         {
-            if (_canvasInputListener == null) { return; }
+            if (_panelTouchInputListener == null) { return; }
             
-            _canvasInputListener.OnClick += HandleSimpleClick;
-            _canvasInputListener.OnDoubleClick += HandleDoubleClick;
+            _panelTouchInputListener.OnClickEvent += HandleSimpleClickEvent;
+            _panelTouchInputListener.OnDoubleClickEvent += HandleDoubleClickEvent;
         }
 
-        private void HandleSimpleClick(Vector2 position)
+        private void HandleSimpleClickEvent(Vector2 position)
         {
             foreach (var entityId in _filter)
             {
@@ -27,7 +27,7 @@ namespace Meta.Common.UI.Input
             }
         }
 
-        private void HandleDoubleClick(Vector2 position)
+        private void HandleDoubleClickEvent(Vector2 position)
         {
             foreach (var entityId in _filter)
             {
@@ -38,10 +38,10 @@ namespace Meta.Common.UI.Input
 
         public void Destroy()
         {
-            if (!_canvasInputListener) { return; }
+            if (!_panelTouchInputListener) { return; }
             
-            _canvasInputListener.OnClick -= HandleSimpleClick;
-            _canvasInputListener.OnDoubleClick -= HandleDoubleClick;
+            _panelTouchInputListener.OnClickEvent -= HandleSimpleClickEvent;
+            _panelTouchInputListener.OnDoubleClickEvent -= HandleDoubleClickEvent;
         }
     }
 }

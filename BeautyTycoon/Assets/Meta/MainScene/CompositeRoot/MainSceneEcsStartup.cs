@@ -16,10 +16,10 @@ namespace Meta.MainScene.CompositeRoot
                 new MainSceneUnitsStartup();
             
             MainSceneUIStartup MainSceneUIStartup = 
-                new MainSceneUIStartup();
+                new MainSceneUIStartup(MainSceneEnvironmentStartup.Metrics);
             
             MainSceneInputHandlingStartup MainSceneInputHandlingStartup = 
-                new MainSceneInputHandlingStartup(MainSceneUIStartup.CanvasInputListener);
+                new MainSceneInputHandlingStartup(MainSceneUIStartup.PanelTouchInputListener);
             
             MainSceneMovementStartup MainSceneMovementStartup = 
                 new MainSceneMovementStartup(MainSceneManagersStartup.Camera, MainSceneEnvironmentStartup.Grid, MainSceneEnvironmentStartup.Mask);
