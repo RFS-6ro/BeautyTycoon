@@ -24,7 +24,7 @@ namespace Meta.Common.Assets.Characters.MovementLogic
 
                 if (!unit.Transform.position.TryGetCellByWorldPosition(out Vector3Int currentCell))
                 {
-                    currentCell = unit.Transform.position.GetClosestEmptyCell();
+                    return;
                 }
                 
                 ref var movementDelta = ref _filter.GetEntity(entityId).Get<CMovementDelta>();

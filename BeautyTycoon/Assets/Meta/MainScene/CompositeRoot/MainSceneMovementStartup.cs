@@ -15,18 +15,18 @@ namespace Meta.MainScene.CompositeRoot
         IFixedUpdateLogicPartStartup<MainSceneMovementStartup>
     {
         private readonly Camera _camera;
-        private readonly UnityEngine.Grid _grid;
+        private readonly Grid _grid;
         private readonly MapMask _mask;
         
         private readonly ICellMovementCalculator _calculator;
         
-        public MainSceneMovementStartup(Camera camera, UnityEngine.Grid grid, MapMask mask)
+        public MainSceneMovementStartup(Camera camera, Grid grid, MapMask mask)
         {
             _camera = camera;
             _grid = grid;
             _mask = mask;
             
-            _calculator = new CellMovementCalculatorMock(_grid, _mask);
+            _calculator = new AStarCellMovementCalculator(_grid, _mask);
         }
         
         public MainSceneMovementStartup AddUpdateSystems(EcsSystems systems)

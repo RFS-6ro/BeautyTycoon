@@ -6,10 +6,10 @@ namespace Meta.Common.Assets.Characters.MovementLogic.CellMovement
 {
     public class CellMovementCalculatorMock : ICellMovementCalculator
     {
-        private readonly UnityEngine.Grid _grid;
+        private readonly Grid _grid;
         private readonly MapMask _mask;
 
-        public CellMovementCalculatorMock(UnityEngine.Grid grid, MapMask mask)
+        public CellMovementCalculatorMock(Grid grid, MapMask mask)
         {
             _grid = grid;
             _mask = mask;
