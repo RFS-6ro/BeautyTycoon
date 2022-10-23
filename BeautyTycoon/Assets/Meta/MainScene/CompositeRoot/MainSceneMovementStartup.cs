@@ -5,6 +5,8 @@ using Meta.Common.Assets.Characters.Movement;
 using Meta.Common.Assets.Characters.MovementApply;
 using Meta.Common.Assets.Characters.MovementLogic;
 using Meta.Common.Assets.Characters.MovementLogic.CellMovement;
+using Meta.Common.World.Creation;
+using UnityEngine;
 
 namespace Meta.MainScene.CompositeRoot
 {
@@ -12,17 +14,26 @@ namespace Meta.MainScene.CompositeRoot
         IUpdateLogicPartStartup<MainSceneMovementStartup>, 
         IFixedUpdateLogicPartStartup<MainSceneMovementStartup>
     {
-        private ICellMovementCalculator _calculator;
+        private readonly Camera _camera;
+        private readonly UnityEngine.Grid _grid;
+        private readonly MapMask _mask;
         
-        public MainSceneMovementStartup()
+        private readonly ICellMovementCalculator _calculator;
+        
+        public MainSceneMovementStartup(Camera camera, UnityEngine.Grid grid, MapMask mask)
         {
-            _calculator = null;
+            _camera = camera;
+            _grid = grid;
+            _mask = mask;
+            
+            _calculator = new CellMovementCalculatorMock(_grid, _mask);
         }
         
         public MainSceneMovementStartup AddUpdateSystems(EcsSystems systems)
         {
             systems
-                .Add(new SConvertTouchToCellMovement());
+                .Add(new SConvertTouchToCellMovement())
+                .Inject(_camera);
             return this;
         }
 
@@ -31,8 +42,8 @@ namespace Meta.MainScene.CompositeRoot
             systems
                 .Add(new SMovementLogic())
                 .Add(new SUnitMoveApply())
-                .OneFrame<CMovementDelta>();
-                // .Inject(_calculator);
+                .OneFrame<CMovementDelta>()
+                .Inject(_calculator);
             return this;
         }
     }

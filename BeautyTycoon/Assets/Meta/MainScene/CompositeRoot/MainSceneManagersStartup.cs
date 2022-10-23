@@ -1,5 +1,6 @@
 using Core.CompositeRoot;
 using Leopotam.Ecs;
+using UnityEngine;
 
 namespace Meta.MainScene.CompositeRoot
 {
@@ -8,6 +9,13 @@ namespace Meta.MainScene.CompositeRoot
         IFixedUpdateLogicPartStartup<MainSceneManagersStartup>, 
         ILateUpdateLogicPartStartup<MainSceneManagersStartup>
     {
+        public readonly Camera Camera;
+        
+        public MainSceneManagersStartup()
+        {
+            Camera = Camera.main;
+        }
+
         public MainSceneManagersStartup AddUpdateSystems(EcsSystems systems)
         {
             return this;

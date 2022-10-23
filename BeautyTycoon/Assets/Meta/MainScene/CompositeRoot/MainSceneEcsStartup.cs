@@ -6,27 +6,43 @@ namespace Meta.MainScene.CompositeRoot
     {
         protected override void AddLogicParts()
         {
-            MainSceneUIStartup uiStartup = new MainSceneUIStartup();
+            MainSceneManagersStartup MainSceneManagersStartup =
+                new MainSceneManagersStartup();
             
-            new MainSceneManagersStartup()
+            MainSceneEnvironmentStartup MainSceneEnvironmentStartup = 
+                new MainSceneEnvironmentStartup();
+            
+            MainSceneUnitsStartup MainSceneUnitsStartup = 
+                new MainSceneUnitsStartup();
+            
+            MainSceneUIStartup MainSceneUIStartup = 
+                new MainSceneUIStartup();
+            
+            MainSceneInputHandlingStartup MainSceneInputHandlingStartup = 
+                new MainSceneInputHandlingStartup(MainSceneUIStartup.CanvasInputListener);
+            
+            MainSceneMovementStartup MainSceneMovementStartup = 
+                new MainSceneMovementStartup(MainSceneManagersStartup.Camera, MainSceneEnvironmentStartup.Grid, MainSceneEnvironmentStartup.Mask);
+            
+            MainSceneManagersStartup
                 .AddUpdateSystems(_updateSystems)
                 .AddFixedUpdateSystems(_fixedUpdateSystems)
                 .AddLateUpdateSystems(_lateUpdateSystems);
 
-            new MainSceneEnvironmentStartup()
+            MainSceneEnvironmentStartup
                 .AddUpdateSystems(_updateSystems);
             
-            new MainSceneUnitsStartup()
+            MainSceneUnitsStartup
                 .AddUpdateSystems(_updateSystems);
 
-            new MainSceneInputHandlingStartup(uiStartup.CanvasInputListener)
+            MainSceneInputHandlingStartup
                 .AddUpdateSystems(_updateSystems);
             
-            new MainSceneMovementStartup()
+            MainSceneMovementStartup
                 .AddUpdateSystems(_updateSystems)
                 .AddFixedUpdateSystems(_fixedUpdateSystems);
 
-            uiStartup
+            MainSceneUIStartup
                 .AddUpdateSystems(_updateSystems);
         }
     }

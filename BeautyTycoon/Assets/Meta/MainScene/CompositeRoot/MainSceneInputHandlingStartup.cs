@@ -8,7 +8,7 @@ namespace Meta.MainScene.CompositeRoot
     public class MainSceneInputHandlingStartup : 
         IUpdateLogicPartStartup<MainSceneInputHandlingStartup>
     {
-        private CanvasInputListener _canvasInputListener;
+        private readonly CanvasInputListener _canvasInputListener;
 
         public MainSceneInputHandlingStartup(CanvasInputListener canvasInputListener)
         {

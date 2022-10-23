@@ -1,5 +1,6 @@
 using Core.CompositeRoot;
 using Leopotam.Ecs;
+using Meta.Common.Assets.Characters.MovementLogic.CellMovement;
 using Meta.Common.Environment.World.Destruction;
 using Meta.Common.World.Creation;
 using UnityEngine;
@@ -8,18 +9,27 @@ namespace Meta.MainScene.CompositeRoot
 {
     public class MainSceneEnvironmentStartup : IUpdateLogicPartStartup<MainSceneEnvironmentStartup>
     {
+        public readonly MapMask Mask;
+        public readonly TileFactory Factory;
+        public readonly UnityEngine.Grid Grid;
+        
+        public MainSceneEnvironmentStartup()
+        {
+            Mask = Resources.Load<MapMask>(nameof(MapMask));
+            Factory = new TileFactory();
+            Grid = Object.Instantiate(Resources.Load<UnityEngine.Grid>("Isometric Grid"));
+            
+            CellUtils.Initialize(Grid, Mask);
+        }
+        
         public MainSceneEnvironmentStartup AddUpdateSystems(EcsSystems systems)
         {
-            MapMask mask = Resources.Load<MapMask>(nameof(MapMask));
-            TileFactory factory = new TileFactory();
-            UnityEngine.Grid grid = Resources.Load<UnityEngine.Grid>("Isometric Grid");
-
             systems
                 .Add(new SWorldGenerator())
                 .Add(new SWorldDestroyer())
-                .Inject(mask)
-                .Inject(factory)
-                .Inject(grid);
+                .Inject(Mask)
+                .Inject(Factory)
+                .Inject(Grid);
             
             new MainSceneWorkingToolsStartup()
                 .AddUpdateSystems(systems);

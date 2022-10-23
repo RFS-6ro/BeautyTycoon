@@ -16,10 +16,12 @@ namespace Meta.Common.UI.Input
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            OnClick.SafeInvoke(eventData.position);
+            Debug.Log("One Tap");
+            //OnClick.SafeInvoke(eventData.position);
             if (Time.time - _lastClickTime <= _clickInterval)
             {
-                OnDoubleClick.SafeInvoke(eventData.position);
+                Debug.Log("Double Tap");
+                //OnDoubleClick.SafeInvoke(eventData.position);
             }
 
             _lastClickTime = Time.time;
