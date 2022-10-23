@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using Meta.Common.Environment.World;
 using Meta.Common.World.Creation;
 using UnityEngine;
 
@@ -6,9 +8,9 @@ namespace Meta.Common.Assets.Characters.MovementLogic.CellMovement
 {
     public static class CellUtils
     {
-        private static UnityEngine.Grid _grid;
+        private static Grid _grid;
         private static MapMask _mask;
-        public static void Initialize(UnityEngine.Grid grid, MapMask mask)
+        public static void Initialize(Grid grid, MapMask mask)
         {
             _grid = grid;
             _mask = mask;
@@ -16,12 +18,8 @@ namespace Meta.Common.Assets.Characters.MovementLogic.CellMovement
         
         public static bool TryGetCellByWorldPosition(this Vector3 position, out Vector3Int cell)
         {
-            throw new NotImplementedException();
-        }
-        
-        public static Vector3Int GetClosestEmptyCell(this Vector3 position)
-        {
-            throw new NotImplementedException();
+            cell = _grid.WorldToCell(position);
+            return _mask.Map.Inside(cell.x, cell.y);
         }
     }
 }

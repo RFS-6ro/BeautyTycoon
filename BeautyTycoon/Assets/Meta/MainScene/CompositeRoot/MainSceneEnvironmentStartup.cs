@@ -13,14 +13,14 @@ namespace Meta.MainScene.CompositeRoot
         public readonly MapMask Mask;
         public readonly MetricsConfiguration Metrics;
         public readonly TileFactory Factory;
-        public readonly UnityEngine.Grid Grid;
+        public readonly Grid Grid;
         
         public MainSceneEnvironmentStartup()
         {
             Mask = Resources.Load<MapMask>(nameof(MapMask));
             Metrics = Resources.Load<MetricsConfiguration>(nameof(MetricsConfiguration));
             Factory = new TileFactory();
-            Grid = Object.Instantiate(Resources.Load<UnityEngine.Grid>("Isometric Grid"));
+            Grid = Object.Instantiate(Resources.Load<Grid>("Isometric Grid"));
             
             CellUtils.Initialize(Grid, Mask);
         }

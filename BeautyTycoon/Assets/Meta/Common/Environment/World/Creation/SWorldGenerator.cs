@@ -9,7 +9,7 @@ namespace Meta.Common.World.Creation
         private EcsWorld _world;
         private MapMask _mask;
         private TileFactory _factory;
-        private UnityEngine.Grid _grid;
+        private Grid _grid;
         
         public void Init()
         {
