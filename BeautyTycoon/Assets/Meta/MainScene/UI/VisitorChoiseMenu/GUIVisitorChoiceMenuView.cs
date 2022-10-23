@@ -10,8 +10,6 @@ namespace Meta.MainScene.UI.VisitorChoseMenu
     {
         [SerializeField] private GUIVisitorChoiceContainer _container;
 
-        public event Action OnChoiceConfirmedEvent;
-        
         protected override void OnAwake()
         {
 #if DEBUG

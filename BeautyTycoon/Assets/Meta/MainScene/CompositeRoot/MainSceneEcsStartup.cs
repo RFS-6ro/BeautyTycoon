@@ -6,43 +6,43 @@ namespace Meta.MainScene.CompositeRoot
     {
         protected override void AddLogicParts()
         {
-            MainSceneManagersStartup MainSceneManagersStartup =
+            MainSceneManagersStartup mainSceneManagersStartup =
                 new MainSceneManagersStartup();
             
-            MainSceneEnvironmentStartup MainSceneEnvironmentStartup = 
+            MainSceneEnvironmentStartup mainSceneEnvironmentStartup = 
                 new MainSceneEnvironmentStartup();
             
-            MainSceneUnitsStartup MainSceneUnitsStartup = 
+            MainSceneUnitsStartup mainSceneUnitsStartup = 
                 new MainSceneUnitsStartup();
             
-            MainSceneUIStartup MainSceneUIStartup = 
-                new MainSceneUIStartup(MainSceneEnvironmentStartup.Metrics);
+            MainSceneUIStartup mainSceneUIStartup = 
+                new MainSceneUIStartup(mainSceneEnvironmentStartup.Metrics);
             
-            MainSceneInputHandlingStartup MainSceneInputHandlingStartup = 
-                new MainSceneInputHandlingStartup(MainSceneUIStartup.PanelTouchInputListener);
+            MainSceneInputHandlingStartup mainSceneInputHandlingStartup = 
+                new MainSceneInputHandlingStartup(mainSceneUIStartup.PanelTouchInputListener);
             
-            MainSceneMovementStartup MainSceneMovementStartup = 
-                new MainSceneMovementStartup(MainSceneManagersStartup.Camera, MainSceneEnvironmentStartup.Grid, MainSceneEnvironmentStartup.Mask);
+            MainSceneMovementStartup mainSceneMovementStartup = 
+                new MainSceneMovementStartup(mainSceneManagersStartup.Camera, mainSceneEnvironmentStartup.Grid, mainSceneEnvironmentStartup.Mask);
             
-            MainSceneManagersStartup
+            mainSceneManagersStartup
                 .AddUpdateSystems(_updateSystems)
                 .AddFixedUpdateSystems(_fixedUpdateSystems)
                 .AddLateUpdateSystems(_lateUpdateSystems);
 
-            MainSceneEnvironmentStartup
+            mainSceneEnvironmentStartup
                 .AddUpdateSystems(_updateSystems);
             
-            MainSceneUnitsStartup
+            mainSceneUnitsStartup
                 .AddUpdateSystems(_updateSystems);
 
-            MainSceneInputHandlingStartup
+            mainSceneInputHandlingStartup
                 .AddUpdateSystems(_updateSystems);
             
-            MainSceneMovementStartup
+            mainSceneMovementStartup
                 .AddUpdateSystems(_updateSystems)
                 .AddFixedUpdateSystems(_fixedUpdateSystems);
 
-            MainSceneUIStartup
+            mainSceneUIStartup
                 .AddUpdateSystems(_updateSystems);
         }
     }
