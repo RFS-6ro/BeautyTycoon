@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4668952015657297855}
   - component: {fileID: 8776476060760538477}
   m_Layer: 0
-  m_Name: Isometric Diamond
+  m_Name: WalkableCell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,6 +1,7 @@
 using Core.CompositeRoot;
 using Leopotam.Ecs;
 using Meta.Common.UI.Input;
+using UnityEngine;
 
 namespace Meta.MainScene.CompositeRoot
 {
@@ -8,9 +9,11 @@ namespace Meta.MainScene.CompositeRoot
     {
         public MainSceneUIStartup()
         {
-            CanvasInputListener = null;
+            UI = Resources.Load<Canvas>("Canvas");
+            CanvasInputListener = UI.GetComponentInChildren<CanvasInputListener>();
         }
         
+        public Canvas UI { get; private set; }
         public CanvasInputListener CanvasInputListener { get; private set; }
         
         public MainSceneUIStartup AddUpdateSystems(EcsSystems systems)

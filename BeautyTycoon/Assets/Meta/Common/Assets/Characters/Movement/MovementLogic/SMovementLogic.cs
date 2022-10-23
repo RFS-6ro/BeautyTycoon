@@ -13,8 +13,11 @@ namespace Meta.Common.Assets.Characters.MovementLogic
         
         public void Run()
         {
-            if (!_cellMovementCalculator.IsAssigned) { return; }
-            
+            if (_cellMovementCalculator == null || !_cellMovementCalculator.IsAssigned)
+            {
+                return;
+            }
+
             foreach (var entityId in _filter)
             {
                 ref var entity = ref _filter.GetEntity(entityId);
