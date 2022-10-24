@@ -13,13 +13,12 @@ namespace Meta.MainScene.CompositeRoot
         ILateUpdateLogicPartStartup<MainSceneManagersStartup>
     {
         private readonly PanelTouchInputListener _panelTouchInputListener;
+        private readonly Camera _camera;
         
-        public readonly Camera Camera;
-        
-        public MainSceneManagersStartup(PanelTouchInputListener panelTouchInputListener)
+        public MainSceneManagersStartup(PanelTouchInputListener panelTouchInputListener, Camera camera)
         {
             _panelTouchInputListener = panelTouchInputListener;
-            Camera = Camera.main;
+            _camera = camera;
         }
 
         public MainSceneManagersStartup AddUpdateSystems(EcsSystems systems)
@@ -39,7 +38,7 @@ namespace Meta.MainScene.CompositeRoot
         {
             systems
                 .Add(new SCameraMovement())
-                .Inject(Camera)
+                .Inject(_camera)
                 .Inject(_panelTouchInputListener);
             return this;
         }

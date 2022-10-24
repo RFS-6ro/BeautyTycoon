@@ -66,7 +66,7 @@ namespace Meta.Common.UI.GUITextWithImage
             _onClick = onClick;
         }
 
-        public void OnClick()
+        private void OnClick()
         {
             _onClick.SafeInvoke();
         }

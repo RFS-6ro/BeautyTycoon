@@ -3,6 +3,7 @@ using Core.CompositeRoot;
 using Leopotam.Ecs;
 using Meta.Common.Environment;
 using Meta.Common.UI.Input;
+using Meta.MainScene.UI.MovingPopUp;
 using Meta.MainScene.UI.ResultWindow;
 using Meta.MainScene.UI.VisitorChoseMenu;
 using UnityEngine;
@@ -13,21 +14,27 @@ namespace Meta.MainScene.CompositeRoot
     {
         private readonly MetricsConfiguration _metrics;
         
+        public readonly Camera Camera;
         public readonly Canvas UI;
         public readonly PanelTouchInputListener PanelTouchInputListener;
         public readonly GUITopBarView GUITopBarView;
         public readonly GUIVisitorChoiceMenuView GUIVisitorChoiceMenuView;
         public readonly GUIResultWindowView GUIResultWindowView;
+        public readonly GUIMovingPopUpView GUIMovingPopUpView;
         
         public MainSceneUIStartup(MetricsConfiguration metrics)
         {
             _metrics = metrics;
             
+            Camera = Camera.main;
+            Debug.Log($"metrics {metrics}");
+            Debug.Log($"Camera {Camera}");
             UI = Object.Instantiate(Resources.Load<Canvas>("Canvas"));
-            PanelTouchInputListener = UI.GetComponentInChildren<PanelTouchInputListener>();
-            GUITopBarView = UI.GetComponentInChildren<GUITopBarView>();
+            PanelTouchInputListener  = UI.GetComponentInChildren<PanelTouchInputListener>();
+            GUITopBarView            = UI.GetComponentInChildren<GUITopBarView>();
             GUIVisitorChoiceMenuView = UI.GetComponentInChildren<GUIVisitorChoiceMenuView>();
-            GUIResultWindowView = UI.GetComponentInChildren<GUIResultWindowView>();
+            GUIResultWindowView      = UI.GetComponentInChildren<GUIResultWindowView>();
+            GUIMovingPopUpView       = UI.GetComponentInChildren<GUIMovingPopUpView>();
         }
         
         public MainSceneUIStartup AddUpdateSystems(EcsSystems systems)
@@ -36,9 +43,13 @@ namespace Meta.MainScene.CompositeRoot
                 .Add(new SGUITopBarPresenter())
                 .Add(new SGUIVisitorChoicePresenter())
                 .Add(new SGUIResultWindowPresenter())
+                .Add(new SGUIMovingPopUpPresenter())
+                .Inject(PanelTouchInputListener.GetComponent<RectTransform>())
                 .Inject(GUITopBarView)
                 .Inject(GUIVisitorChoiceMenuView)
                 .Inject(GUIResultWindowView)
+                .Inject(GUIMovingPopUpView)
+                .Inject(Camera)
                 .Inject(_metrics);
             return this;
         }
