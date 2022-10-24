@@ -13,8 +13,8 @@ namespace Meta.MainScene.CompositeRoot
     public class MainSceneUIStartup : IUpdateLogicPartStartup<MainSceneUIStartup>
     {
         private readonly MetricsConfiguration _metrics;
-        private readonly Camera _camera;
         
+        public readonly Camera Camera;
         public readonly Canvas UI;
         public readonly PanelTouchInputListener PanelTouchInputListener;
         public readonly GUITopBarView GUITopBarView;
@@ -22,17 +22,19 @@ namespace Meta.MainScene.CompositeRoot
         public readonly GUIResultWindowView GUIResultWindowView;
         public readonly GUIMovingPopUpView GUIMovingPopUpView;
         
-        public MainSceneUIStartup(MetricsConfiguration metrics, Camera camera)
+        public MainSceneUIStartup(MetricsConfiguration metrics)
         {
             _metrics = metrics;
-            _camera = camera;
             
+            Camera = Camera.main;
+            Debug.Log($"metrics {metrics}");
+            Debug.Log($"Camera {Camera}");
             UI = Object.Instantiate(Resources.Load<Canvas>("Canvas"));
-            PanelTouchInputListener = UI.GetComponentInChildren<PanelTouchInputListener>();
-            GUITopBarView = UI.GetComponentInChildren<GUITopBarView>();
+            PanelTouchInputListener  = UI.GetComponentInChildren<PanelTouchInputListener>();
+            GUITopBarView            = UI.GetComponentInChildren<GUITopBarView>();
             GUIVisitorChoiceMenuView = UI.GetComponentInChildren<GUIVisitorChoiceMenuView>();
-            GUIResultWindowView = UI.GetComponentInChildren<GUIResultWindowView>();
-            GUIMovingPopUpView = UI.GetComponentInChildren<GUIMovingPopUpView>();
+            GUIResultWindowView      = UI.GetComponentInChildren<GUIResultWindowView>();
+            GUIMovingPopUpView       = UI.GetComponentInChildren<GUIMovingPopUpView>();
         }
         
         public MainSceneUIStartup AddUpdateSystems(EcsSystems systems)
@@ -47,8 +49,8 @@ namespace Meta.MainScene.CompositeRoot
                 .Inject(GUIVisitorChoiceMenuView)
                 .Inject(GUIResultWindowView)
                 .Inject(GUIMovingPopUpView)
-                .Inject(_metrics)
-                .Inject(_camera);
+                .Inject(Camera)
+                .Inject(_metrics);
             return this;
         }
     }

@@ -16,25 +16,25 @@ namespace Meta.MainScene.CompositeRoot
                 new MainSceneUIStartup(mainSceneEnvironmentStartup.Metrics);
             
             MainSceneManagersStartup mainSceneManagersStartup =
-                new MainSceneManagersStartup(mainSceneUIStartup.PanelTouchInputListener);
+                new MainSceneManagersStartup(mainSceneUIStartup.PanelTouchInputListener, mainSceneUIStartup.Camera);
             
             MainSceneInputHandlingStartup mainSceneInputHandlingStartup = 
                 new MainSceneInputHandlingStartup(mainSceneUIStartup.PanelTouchInputListener);
             
             MainSceneMovementStartup mainSceneMovementStartup = 
-                new MainSceneMovementStartup(mainSceneManagersStartup.Camera, mainSceneEnvironmentStartup.Grid, mainSceneEnvironmentStartup.Mask);
+                new MainSceneMovementStartup(mainSceneUIStartup.Camera, mainSceneEnvironmentStartup.Grid, mainSceneEnvironmentStartup.Mask);
             
             mainSceneManagersStartup
                 .AddUpdateSystems(_updateSystems)
                 .AddFixedUpdateSystems(_fixedUpdateSystems)
                 .AddLateUpdateSystems(_lateUpdateSystems);
-
+            
             mainSceneEnvironmentStartup
                 .AddUpdateSystems(_updateSystems);
             
             mainSceneUnitsStartup
                 .AddUpdateSystems(_updateSystems);
-
+            
             mainSceneInputHandlingStartup
                 .AddUpdateSystems(_updateSystems);
             
