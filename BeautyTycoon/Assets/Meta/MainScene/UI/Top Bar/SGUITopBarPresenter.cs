@@ -32,12 +32,12 @@ namespace BT.Meta.MainScene.UI.TopBar
             }
             foreach (var entityId in _reputationFilter)
             {
-                _topBarPresenter.ShowReputation(_reputationFilter.Get1(entityId).Percentage.ToString());
+                _topBarPresenter.ShowReputation($"{_reputationFilter.Get1(entityId).Percentage}%");
                 break;
             }
             foreach (var entityId in _balanceFilter)
             {
-                _topBarPresenter.ShowTime(_balanceFilter.Get1(entityId).Amount.ToString());
+                _topBarPresenter.ShowBalance($"{_balanceFilter.Get1(entityId).Amount}$");
                 break;
             }
             

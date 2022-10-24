@@ -5,11 +5,16 @@ using UnityEngine;
 
 namespace Meta.Common.Assets.Characters.MovementLogic
 {
-    public class SMovementLogic : IEcsRunSystem
+    public class SMovementLogic : IEcsInitSystem, IEcsRunSystem
     {
         private ICellMovementCalculator _cellMovementCalculator;
         
         private EcsFilter<CUnit, CTargetCell> _filter;
+
+        public void Init()
+        {
+            _cellMovementCalculator.Init();
+        }
         
         public void Run()
         {

@@ -15,13 +15,17 @@ namespace Meta.Common.Environment.DailySchedule
         public void Init()
         {
             _configuration = Resources.Load<WorldTimeConfiguration>("TimeConfiguration");
+            _configuration.Init();
+            
+            _lastUpdateTime = Time.time;
+            
             ref CWorldTime worldTime = ref _world.NewEntity().Get<CWorldTime>();
             worldTime.Time = _configuration.ShiftStartTime.Clone();
         }
         
         public void Run()
         {
-            if (Time.time - _lastUpdateTime < _configuration.TimeUpdateTickRateInSeconds) { return; }
+            if (Time.time - _lastUpdateTime < _configuration.TimeUpdateDelayInSeconds) { return; }
             
             foreach (var entityId in _filter)
             {

@@ -12,12 +12,20 @@ namespace Meta.Common.Environment.DailySchedule
 
         public int ShiftDurationInSecondsRealtime = 300;
         
-        public int TimeUpdateTickRateInSeconds = 5;
+        public int TimeUpdateDelayInSeconds = 5;
 
-        //TODO: consider result caching 
-        public int TimeDelta =>
-            (ShiftEndTime.ToMinutes() - ShiftStartTime.ToMinutes()) / ShiftDurationInSecondsRealtime * TimeUpdateTickRateInSeconds;
+        public int TimeDelta;
 
+        public void Init()
+        {
+            CalculateTimeDelta();
+        }
+
+        private void CalculateTimeDelta()
+        {
+            TimeDelta = (ShiftEndTime.ToMinutes() - ShiftStartTime.ToMinutes()) / ShiftDurationInSecondsRealtime * TimeUpdateDelayInSeconds;
+        }
+        
 #if UNITY_EDITOR
         private void OnValidate()
         {
@@ -26,6 +34,8 @@ namespace Meta.Common.Environment.DailySchedule
                 Debug.LogError("Shift end time is less, than shift start time. Values were updated");
                 ShiftEndTime.AddHours(8);
             }
+
+            CalculateTimeDelta();
         }
 #endif
     }
