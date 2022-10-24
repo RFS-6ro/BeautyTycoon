@@ -18,5 +18,6 @@ MonoBehaviour:
   ShiftEndTime:
     Hour: 20
     Minute: 0
-  ShiftDurationInSecondsRealtime: 300
-  TimeUpdateTickRateInSeconds: 5
+  ShiftDurationInSecondsRealtime: 30
+  TimeUpdateDelayInSeconds: 5
+  TimeDelta: 100

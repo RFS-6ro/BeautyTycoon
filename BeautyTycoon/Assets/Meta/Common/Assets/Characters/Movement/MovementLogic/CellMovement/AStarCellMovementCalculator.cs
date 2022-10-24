@@ -23,8 +23,12 @@ namespace Meta.Common.Assets.Characters.MovementLogic.CellMovement
             _mask = mask;
 
             _path = new Path();
-            
             _obstacles = new List<Vector2Int>();
+        }
+
+        public void Init()
+        {
+            _obstacles.Clear();
             _mask.Map.ForEachCell((x, y) =>
             {
                 if (_mask.Map[x, y] == MapMask.NON_WALKABLE)

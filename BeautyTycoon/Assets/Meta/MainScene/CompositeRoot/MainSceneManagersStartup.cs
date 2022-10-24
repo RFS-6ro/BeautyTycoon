@@ -1,5 +1,8 @@
 using Core.CompositeRoot;
 using Leopotam.Ecs;
+using Meta.Common.UI.Input;
+using Meta.MainScene.CameraLogic;
+using Meta.MainScene.SceneReloader;
 using UnityEngine;
 
 namespace Meta.MainScene.CompositeRoot
@@ -9,15 +12,21 @@ namespace Meta.MainScene.CompositeRoot
         IFixedUpdateLogicPartStartup<MainSceneManagersStartup>, 
         ILateUpdateLogicPartStartup<MainSceneManagersStartup>
     {
+        private readonly PanelTouchInputListener _panelTouchInputListener;
+        
         public readonly Camera Camera;
         
-        public MainSceneManagersStartup()
+        public MainSceneManagersStartup(PanelTouchInputListener panelTouchInputListener)
         {
+            _panelTouchInputListener = panelTouchInputListener;
             Camera = Camera.main;
         }
 
         public MainSceneManagersStartup AddUpdateSystems(EcsSystems systems)
         {
+            systems
+                .Add(new SSceneReloader())
+                .OneFrame<CReloadSceneRequest>();
             return this;
         }
 
@@ -28,7 +37,10 @@ namespace Meta.MainScene.CompositeRoot
 
         public MainSceneManagersStartup AddLateUpdateSystems(EcsSystems systems)
         {
-            //TODO: Add Camera Manager
+            systems
+                .Add(new SCameraMovement())
+                .Inject(Camera)
+                .Inject(_panelTouchInputListener);
             return this;
         }
     }

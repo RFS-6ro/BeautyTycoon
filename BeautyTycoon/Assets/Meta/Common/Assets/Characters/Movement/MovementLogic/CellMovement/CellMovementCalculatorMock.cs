@@ -15,6 +15,8 @@ namespace Meta.Common.Assets.Characters.MovementLogic.CellMovement
             _mask = mask;
         }
 
+        public void Init() { }
+
         public Vector3 GetNextFrameDelta(EcsEntity ecsEntity, Vector3Int currentCell, Vector3Int targetCell)
         {
             if (currentCell == targetCell)

@@ -12,6 +12,8 @@ namespace Meta.MainScene.CompositeRoot
         {
             systems
                 .Add(new SWorldTimeChange())
+                .Add(new SBalanceHandler())
+                .Add(new SReputationHandler())
                 .OneFrame<CReputationChange>()
                 .OneFrame<CBalanceChange>();
             return this;

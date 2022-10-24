@@ -6,9 +6,6 @@ namespace Meta.MainScene.CompositeRoot
     {
         protected override void AddLogicParts()
         {
-            MainSceneManagersStartup mainSceneManagersStartup =
-                new MainSceneManagersStartup();
-            
             MainSceneEnvironmentStartup mainSceneEnvironmentStartup = 
                 new MainSceneEnvironmentStartup();
             
@@ -17,6 +14,9 @@ namespace Meta.MainScene.CompositeRoot
             
             MainSceneUIStartup mainSceneUIStartup = 
                 new MainSceneUIStartup(mainSceneEnvironmentStartup.Metrics);
+            
+            MainSceneManagersStartup mainSceneManagersStartup =
+                new MainSceneManagersStartup(mainSceneUIStartup.PanelTouchInputListener);
             
             MainSceneInputHandlingStartup mainSceneInputHandlingStartup = 
                 new MainSceneInputHandlingStartup(mainSceneUIStartup.PanelTouchInputListener);

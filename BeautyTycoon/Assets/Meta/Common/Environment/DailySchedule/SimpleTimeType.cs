@@ -31,7 +31,7 @@ namespace Meta.Common.Environment.DailySchedule
 
         public int ToMinutes()
         {
-            return Hour * HOURS_MAX + Minute;
+            return Hour * MINUTES_MAX + Minute;
         }
         
         public string ToString24Hours()
