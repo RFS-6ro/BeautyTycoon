@@ -1,4 +1,4 @@
-namespace Meta.Common.Environment.Balance
+namespace BT.Meta.Common.Environment.Balance
 {
     public struct CBalanceChange
     {

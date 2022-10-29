@@ -1,5 +1,6 @@
 using BT.Core.UI.View;
-using Meta.Common.UI.GUITextWithImage;
+using BT.Meta.Common.UI.GUITextWithImage;
+
 using UnityEngine;
 
 namespace BT.Meta.MainScene.UI.TopBar
@@ -9,7 +10,7 @@ namespace BT.Meta.MainScene.UI.TopBar
         [SerializeField] private GUITextWithImageView _time;
         [SerializeField] private GUITextWithImageView _reputation;
         [SerializeField] private GUITextWithImageView _balance;
-        
+
         protected override void OnAwake()
         {
 #if DEBUG

@@ -1,35 +1,31 @@
-using Core.CompositeRoot;
+using BT.Core.CompositeRoot;
+using BT.Meta.Common.UI.Input;
+using BT.Meta.MainScene.CameraLogic;
+using BT.Meta.MainScene.SceneReloader;
+
 using Leopotam.Ecs;
-using Meta.Common.UI.Input;
-using Meta.MainScene.CameraLogic;
-using Meta.MainScene.SceneReloader;
+
 using UnityEngine;
 
-namespace Meta.MainScene.CompositeRoot
+namespace BT.Meta.MainScene.CompositeRoot
 {
-    public class MainSceneManagersStartup : 
-        IUpdateLogicPartStartup<MainSceneManagersStartup>, 
-        IFixedUpdateLogicPartStartup<MainSceneManagersStartup>, 
+    public class MainSceneManagersStartup :
+        IUpdateLogicPartStartup<MainSceneManagersStartup>,
+        IFixedUpdateLogicPartStartup<MainSceneManagersStartup>,
         ILateUpdateLogicPartStartup<MainSceneManagersStartup>
     {
-        private readonly PanelTouchInputListener _panelTouchInputListener;
         private readonly Camera _camera;
-        
-        public MainSceneManagersStartup(PanelTouchInputListener panelTouchInputListener, Camera camera)
+        private readonly PanelTouchInputListener _panelTouchInputListener;
+
+        public MainSceneManagersStartup
+            (PanelTouchInputListener panelTouchInputListener, Camera camera)
         {
             _panelTouchInputListener = panelTouchInputListener;
             _camera = camera;
         }
 
-        public MainSceneManagersStartup AddUpdateSystems(EcsSystems systems)
-        {
-            systems
-                .Add(new SSceneReloader())
-                .OneFrame<CReloadSceneRequest>();
-            return this;
-        }
-
-        public MainSceneManagersStartup AddFixedUpdateSystems(EcsSystems systems)
+        public MainSceneManagersStartup AddFixedUpdateSystems
+            (EcsSystems systems)
         {
             return this;
         }
@@ -40,6 +36,14 @@ namespace Meta.MainScene.CompositeRoot
                 .Add(new SCameraMovement())
                 .Inject(_camera)
                 .Inject(_panelTouchInputListener);
+            return this;
+        }
+
+        public MainSceneManagersStartup AddUpdateSystems(EcsSystems systems)
+        {
+            systems
+                .Add(new SSceneReloader())
+                .OneFrame<CReloadSceneRequest>();
             return this;
         }
     }

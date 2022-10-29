@@ -1,42 +1,47 @@
+using BT.Core.CompositeRoot;
+using BT.Meta.Common.Environment;
+using BT.Meta.Common.UI.Input;
+using BT.Meta.MainScene.UI.MovingPopUp;
+using BT.Meta.MainScene.UI.ResultWindow;
 using BT.Meta.MainScene.UI.TopBar;
-using Core.CompositeRoot;
+using BT.Meta.MainScene.UI.VisitorChoseMenu;
+
 using Leopotam.Ecs;
-using Meta.Common.Environment;
-using Meta.Common.UI.Input;
-using Meta.MainScene.UI.MovingPopUp;
-using Meta.MainScene.UI.ResultWindow;
-using Meta.MainScene.UI.VisitorChoseMenu;
+
 using UnityEngine;
 
-namespace Meta.MainScene.CompositeRoot
+namespace BT.Meta.MainScene.CompositeRoot
 {
-    public class MainSceneUIStartup : IUpdateLogicPartStartup<MainSceneUIStartup>
+    public class
+        MainSceneUIStartup : IUpdateLogicPartStartup<MainSceneUIStartup>
     {
+        private readonly Camera _camera;
         private readonly MetricsConfiguration _metrics;
-        
-        public readonly Camera Camera;
-        public readonly Canvas UI;
-        public readonly PanelTouchInputListener PanelTouchInputListener;
+        public readonly GUIMovingPopUpView GUIMovingPopUpView;
+        public readonly GUIResultWindowView GUIResultWindowView;
         public readonly GUITopBarView GUITopBarView;
         public readonly GUIVisitorChoiceMenuView GUIVisitorChoiceMenuView;
-        public readonly GUIResultWindowView GUIResultWindowView;
-        public readonly GUIMovingPopUpView GUIMovingPopUpView;
-        
-        public MainSceneUIStartup(MetricsConfiguration metrics)
+        public readonly PanelTouchInputListener PanelTouchInputListener;
+
+        public readonly Canvas UI;
+
+        public MainSceneUIStartup(MetricsConfiguration metrics, Camera camera)
         {
             _metrics = metrics;
-            
-            Camera = Camera.main;
-            Debug.Log($"metrics {metrics}");
-            Debug.Log($"Camera {Camera}");
+            _camera = camera;
+
             UI = Object.Instantiate(Resources.Load<Canvas>("Canvas"));
-            PanelTouchInputListener  = UI.GetComponentInChildren<PanelTouchInputListener>();
-            GUITopBarView            = UI.GetComponentInChildren<GUITopBarView>();
-            GUIVisitorChoiceMenuView = UI.GetComponentInChildren<GUIVisitorChoiceMenuView>();
-            GUIResultWindowView      = UI.GetComponentInChildren<GUIResultWindowView>();
-            GUIMovingPopUpView       = UI.GetComponentInChildren<GUIMovingPopUpView>();
+            PanelTouchInputListener =
+                UI.GetComponentInChildren<PanelTouchInputListener>();
+            GUITopBarView = UI.GetComponentInChildren<GUITopBarView>();
+            GUIVisitorChoiceMenuView =
+                UI.GetComponentInChildren<GUIVisitorChoiceMenuView>();
+            GUIResultWindowView =
+                UI.GetComponentInChildren<GUIResultWindowView>();
+            GUIMovingPopUpView =
+                UI.GetComponentInChildren<GUIMovingPopUpView>();
         }
-        
+
         public MainSceneUIStartup AddUpdateSystems(EcsSystems systems)
         {
             systems
@@ -49,7 +54,7 @@ namespace Meta.MainScene.CompositeRoot
                 .Inject(GUIVisitorChoiceMenuView)
                 .Inject(GUIResultWindowView)
                 .Inject(GUIMovingPopUpView)
-                .Inject(Camera)
+                .Inject(_camera)
                 .Inject(_metrics);
             return this;
         }

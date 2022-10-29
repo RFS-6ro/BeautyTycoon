@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Meta.Common.InputHandling
+namespace BT.Meta.Common.InputHandling
 {
     public struct CKeyboardInputData
     {

@@ -1,8 +1,10 @@
+using BT.Meta.Common.World.Creation;
+
 using Leopotam.Ecs;
-using Meta.Common.World.Creation;
+
 using UnityEngine;
 
-namespace Meta.Common.Assets.Characters.MovementLogic.CellMovement
+namespace BT.Meta.Common.Assets.Characters.MovementLogic.CellMovement
 {
     public class CellMovementCalculatorMock : ICellMovementCalculator
     {
@@ -17,12 +19,10 @@ namespace Meta.Common.Assets.Characters.MovementLogic.CellMovement
 
         public void Init() { }
 
-        public Vector3 GetNextFrameDelta(EcsEntity ecsEntity, Vector3Int currentCell, Vector3Int targetCell)
+        public Vector3 GetNextFrameDelta
+            (EcsEntity ecsEntity, Vector3Int currentCell, Vector3Int targetCell)
         {
-            if (currentCell == targetCell)
-            {
-                return targetCell;
-            }
+            if (currentCell == targetCell) return targetCell;
 
             return targetCell;
         }

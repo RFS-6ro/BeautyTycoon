@@ -1,7 +1,4 @@
-namespace Core.CompositeRoot
+namespace BT.Core.CompositeRoot
 {
-    public interface ILogicPart
-    {
-        
-    }
+    public interface ILogicPart { }
 }

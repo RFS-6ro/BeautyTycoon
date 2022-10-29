@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BT.Meta.Common.Characters
+namespace BT.Meta.Common
 {
     public struct CUnit
     {

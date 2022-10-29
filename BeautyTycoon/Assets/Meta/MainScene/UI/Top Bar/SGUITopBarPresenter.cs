@@ -1,46 +1,55 @@
+using BT.Meta.Common.Environment.Balance;
+using BT.Meta.Common.Environment.DailySchedule;
+using BT.Meta.Common.Environment.Reputation;
+
 using Leopotam.Ecs;
-using Meta.Common.Environment.Balance;
-using Meta.Common.Environment.DailySchedule;
-using Meta.Common.Environment.Reputation;
 
 namespace BT.Meta.MainScene.UI.TopBar
 {
     public class SGUITopBarPresenter : IEcsInitSystem, IEcsRunSystem
     {
-        private GUITopBarView _topBarPresenter;
+        private EcsFilter<CBalance> _balanceFilter;
+        private EcsFilter<CReputation> _reputationFilter;
+
+        private EcsFilter<CShiftOver> _shiftOverFilter;
 
         private EcsFilter<CWorldTime> _timeFilter;
-        private EcsFilter<CReputation> _reputationFilter;
-        private EcsFilter<CBalance> _balanceFilter;
-        
-        private EcsFilter<CShiftOver> _shiftOverFilter;
+        private GUITopBarView _topBarPresenter;
 
         public void Init()
         {
             _topBarPresenter.Activate();
         }
-        
+
         //possible class split, but not necessary
         public void Run()
         {
-            if (!_topBarPresenter.IsShown) { return; }
-            
+            if (!_topBarPresenter.IsShown) return;
+
             foreach (var entityId in _timeFilter)
             {
-                _topBarPresenter.ShowTime(_timeFilter.Get1(entityId).Time.ToString12Hours());
+                _topBarPresenter.ShowTime
+                (
+                    _timeFilter.Get1(entityId)
+                        .Time.ToString12Hours()
+                );
                 break;
             }
+
             foreach (var entityId in _reputationFilter)
             {
-                _topBarPresenter.ShowReputation($"{_reputationFilter.Get1(entityId).Percentage}%");
+                _topBarPresenter.ShowReputation
+                    ($"{_reputationFilter.Get1(entityId).Percentage}%");
                 break;
             }
+
             foreach (var entityId in _balanceFilter)
             {
-                _topBarPresenter.ShowBalance($"{_balanceFilter.Get1(entityId).Amount}$");
+                _topBarPresenter.ShowBalance
+                    ($"{_balanceFilter.Get1(entityId).Amount}$");
                 break;
             }
-            
+
             foreach (var entityId in _shiftOverFilter)
             {
                 _topBarPresenter.Deactivate();

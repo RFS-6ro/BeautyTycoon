@@ -7,7 +7,8 @@ namespace AI.A_Star
         private readonly double estimatedTotalCost;
         private readonly double heuristicDistance;
 
-        public PathNode(Vector2Int position, Vector2Int target, double traverseDistance)
+        public PathNode
+            (Vector2Int position, Vector2Int target, double traverseDistance)
         {
             Position = position;
             TraverseDistance = traverseDistance;
@@ -19,6 +20,8 @@ namespace AI.A_Star
         public double TraverseDistance { get; }
 
         public int CompareTo(PathNode other)
-            => estimatedTotalCost.CompareTo(other.estimatedTotalCost);
+        {
+            return estimatedTotalCost.CompareTo(other.estimatedTotalCost);
+        }
     }
 }

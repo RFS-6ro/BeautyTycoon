@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Meta.Common.Assets.Characters
+namespace BT.Meta.Common.Assets.Characters
 {
     public struct CMovementDelta
     {

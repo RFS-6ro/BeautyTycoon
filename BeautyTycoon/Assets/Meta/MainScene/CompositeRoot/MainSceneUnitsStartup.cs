@@ -1,11 +1,13 @@
-using Core.CompositeRoot;
-using Leopotam.Ecs;
-using Meta.Common.Assets.Characters.MainCharacter;
-using Meta.Common.Assets.Characters.Visitor_default;
+using BT.Core.CompositeRoot;
+using BT.Meta.Common.Assets.Characters.MainCharacter;
+using BT.Meta.Common.Assets.Characters.Visitor_default;
 
-namespace Meta.MainScene.CompositeRoot
+using Leopotam.Ecs;
+
+namespace BT.Meta.MainScene.CompositeRoot
 {
-    public class MainSceneUnitsStartup : IUpdateLogicPartStartup<MainSceneUnitsStartup>
+    public class
+        MainSceneUnitsStartup : IUpdateLogicPartStartup<MainSceneUnitsStartup>
     {
         public MainSceneUnitsStartup AddUpdateSystems(EcsSystems systems)
         {

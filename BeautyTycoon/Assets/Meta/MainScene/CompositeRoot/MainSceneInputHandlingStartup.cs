@@ -1,21 +1,24 @@
-using Core.CompositeRoot;
-using Leopotam.Ecs;
-using Meta.Common.InputHandling;
-using Meta.Common.UI.Input;
+using BT.Core.CompositeRoot;
+using BT.Meta.Common.InputHandling;
+using BT.Meta.Common.UI.Input;
 
-namespace Meta.MainScene.CompositeRoot
+using Leopotam.Ecs;
+
+namespace BT.Meta.MainScene.CompositeRoot
 {
-    public class MainSceneInputHandlingStartup : 
+    public class MainSceneInputHandlingStartup :
         IUpdateLogicPartStartup<MainSceneInputHandlingStartup>
     {
         private readonly PanelTouchInputListener _panelTouchInputListener;
 
-        public MainSceneInputHandlingStartup(PanelTouchInputListener panelTouchInputListener)
+        public MainSceneInputHandlingStartup
+            (PanelTouchInputListener panelTouchInputListener)
         {
             _panelTouchInputListener = panelTouchInputListener;
         }
-        
-        public MainSceneInputHandlingStartup AddUpdateSystems(EcsSystems systems)
+
+        public MainSceneInputHandlingStartup AddUpdateSystems
+            (EcsSystems systems)
         {
             systems
                 .Add(new STouchInputSender())

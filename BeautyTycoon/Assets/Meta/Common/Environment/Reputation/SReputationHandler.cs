@@ -1,22 +1,23 @@
+using BT.Meta.Common.Environment.Reputation.Utils;
+
 using Leopotam.Ecs;
-using Meta.Common.Environment.Reputation.Utils;
+
 using UnityEngine;
 
-namespace Meta.Common.Environment.Reputation
+namespace BT.Meta.Common.Environment.Reputation
 {
     public class SReputationHandler : IEcsInitSystem, IEcsRunSystem
     {
-        private EcsWorld _world;
-        private MetricsConfiguration _metrics;
-        
-        private EcsEntity _balanceStorage;
-        
         private EcsFilter<CReputationChange> _balanceChangeFilter;
+
+        private EcsEntity _balanceStorage;
+        private MetricsConfiguration _metrics;
+        private EcsWorld _world;
 
         public void Init()
         {
             _balanceStorage = _world.NewEntity();
-            ref CReputation balance = ref _balanceStorage.Get<CReputation>();
+            ref var balance = ref _balanceStorage.Get<CReputation>();
             balance.Percentage = ReputationUtils.CalculatePercentage();
         }
 
@@ -24,13 +25,13 @@ namespace Meta.Common.Environment.Reputation
         {
             foreach (var entityId in _balanceChangeFilter)
             {
-                EcsEntity entity = _balanceChangeFilter.GetEntity(entityId);
-                CReputationChange balanceChange = _balanceChangeFilter.Get1(entityId);
+                var entity = _balanceChangeFilter.GetEntity(entityId);
+                var balanceChange = _balanceChangeFilter.Get1(entityId);
                 AddVisitor(balanceChange.Delta);
-                
-                ref CReputation balance = ref _balanceStorage.Get<CReputation>();
+
+                ref var balance = ref _balanceStorage.Get<CReputation>();
                 balance.Percentage = ReputationUtils.CalculatePercentage();
-                
+
                 entity.Del<CReputationChange>();
                 break;
             }
@@ -38,13 +39,20 @@ namespace Meta.Common.Environment.Reputation
 
         private void AddVisitor(int delta)
         {
-            int totalVisitors = PlayerPrefs.GetInt(MetricsConfiguration.TOTAL_VISITORS, 0);
-            PlayerPrefs.SetInt(MetricsConfiguration.TOTAL_VISITORS, ++totalVisitors);
-            
+            var totalVisitors = PlayerPrefs.GetInt
+                (MetricsConfiguration.TOTAL_VISITORS, 0);
+            PlayerPrefs.SetInt
+                (MetricsConfiguration.TOTAL_VISITORS, ++totalVisitors);
+
             if (delta > 0)
             {
-                int successfullyProcessedVisitors = PlayerPrefs.GetInt(MetricsConfiguration.SUCCESS_PROCESSED, 0);
-                PlayerPrefs.SetInt(MetricsConfiguration.SUCCESS_PROCESSED, ++successfullyProcessedVisitors);
+                var successfullyProcessedVisitors = PlayerPrefs.GetInt
+                    (MetricsConfiguration.SUCCESS_PROCESSED, 0);
+                PlayerPrefs.SetInt
+                (
+                    MetricsConfiguration.SUCCESS_PROCESSED,
+                    ++successfullyProcessedVisitors
+                );
             }
         }
     }

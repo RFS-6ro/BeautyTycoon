@@ -1,10 +1,11 @@
-using System;
 using System.Collections.Generic;
+
 using BT.Core.UI.View;
-using Meta.MainScene.UI.VisitorChoseMenu.VisitorChoicePanel;
+using BT.Meta.MainScene.UI.VisitorChoseMenu.VisitorChoicePanel;
+
 using UnityEngine;
 
-namespace Meta.MainScene.UI.VisitorChoseMenu
+namespace BT.Meta.MainScene.UI.VisitorChoseMenu
 {
     public class GUIVisitorChoiceMenuView : UIView
     {

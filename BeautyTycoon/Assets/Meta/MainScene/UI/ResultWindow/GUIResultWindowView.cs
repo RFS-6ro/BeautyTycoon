@@ -1,9 +1,11 @@
 using System;
+
 using BT.Core.UI.View;
-using Meta.Common.UI.GUITextWithImage;
+using BT.Meta.Common.UI.GUITextWithImage;
+
 using UnityEngine;
 
-namespace Meta.MainScene.UI.ResultWindow
+namespace BT.Meta.MainScene.UI.ResultWindow
 {
     public class GUIResultWindowView : UIView
     {
@@ -13,7 +15,7 @@ namespace Meta.MainScene.UI.ResultWindow
         [SerializeField] private GUITextWithImageView _reputation;
         [SerializeField] private GUITextWithImageView _rent;
         [SerializeField] private GUITextWithImageView _okButton;
-        
+
         protected override void OnAwake()
         {
 #if DEBUG
@@ -26,14 +28,15 @@ namespace Meta.MainScene.UI.ResultWindow
 #endif
         }
 
-        public void Show(
-            string mainText, 
-            string clientsProcessed, 
-            string reputation, 
-            string balance, 
-            string rent, 
-            string okButton, 
-            Action okButtonClick 
+        public void Show
+        (
+            string mainText,
+            string clientsProcessed,
+            string reputation,
+            string balance,
+            string rent,
+            string okButton,
+            Action okButtonClick
         )
         {
             _text.ShowText(mainText);

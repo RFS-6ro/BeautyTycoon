@@ -1,16 +1,18 @@
+using BT.Meta.Common.Environment.World;
+
 using Leopotam.Ecs;
-using Meta.Common.Environment.World;
+
 using UnityEngine;
 
-namespace Meta.Common.World.Creation
+namespace BT.Meta.Common.World.Creation
 {
     public class SWorldGenerator : IEcsInitSystem
     {
-        private EcsWorld _world;
-        private MapMask _mask;
         private TileFactory _factory;
         private Grid _grid;
-        
+        private MapMask _mask;
+        private EcsWorld _world;
+
         public void Init()
         {
             _mask.GenerateMap();
@@ -19,27 +21,31 @@ namespace Meta.Common.World.Creation
 
         private void HandleCell(int x, int y)
         {
-            GameObject tilePrefab = _factory.GetTile(_mask.Map[x, y]);
+            var tilePrefab = _factory.GetTile(_mask.Map[x, y]);
 
             if (tilePrefab == null)
             {
 #if DEBUG
-                Debug.LogWarning($"unsupported tile type: {_mask.Map[x, y]}");               
+                Debug.LogWarning($"unsupported tile type: {_mask.Map[x, y]}");
 #endif
                 return;
             }
-                    
-            GameObject tile = CreateTile(tilePrefab, _mask.StartPoint, x, y);
-                    
+
+            var tile = CreateTile(tilePrefab, _mask.StartPoint, x, y);
+
             CreateTileEntity(tile);
         }
-        
-        private GameObject CreateTile(GameObject prefab, Vector3 startPoint, int x, int y)
+
+        private GameObject CreateTile
+            (GameObject prefab, Vector3 startPoint, int x, int y)
         {
-            GameObject tile = Object.Instantiate(prefab);
-            
+            var tile = Object.Instantiate(prefab);
+
             tile.name = $"Cell [{x}, {y}]";
-            tile.transform.position = startPoint + _grid.GetCellCenterWorld(new Vector3Int(x, y, 0));;
+            tile.transform.position = startPoint
+                                      + _grid.GetCellCenterWorld
+                                          (new Vector3Int(x, y, 0));
+            ;
             tile.transform.parent = _grid.transform;
 
             return tile;
@@ -47,8 +53,9 @@ namespace Meta.Common.World.Creation
 
         private void CreateTileEntity(GameObject tileInstance)
         {
-            ref CWorldTile tileEntity = ref _world.NewEntity().Get<CWorldTile>();
-            tileEntity.Tile = tileInstance;   
+            ref var tileEntity = ref _world.NewEntity()
+                .Get<CWorldTile>();
+            tileEntity.Tile = tileInstance;
         }
     }
 }

@@ -1,25 +1,26 @@
+using BT.Meta.Common.Environment;
+using BT.Meta.Common.Environment.DailySchedule;
+using BT.Meta.Common.Environment.Reputation.Utils;
+using BT.Meta.MainScene.SceneReloader;
+
 using Leopotam.Ecs;
-using Meta.Common.Environment;
-using Meta.Common.Environment.DailySchedule;
-using Meta.Common.Environment.Reputation.Utils;
-using Meta.MainScene.SceneReloader;
+
 using UnityEngine;
 
-namespace Meta.MainScene.UI.ResultWindow
+namespace BT.Meta.MainScene.UI.ResultWindow
 {
     public class SGUIResultWindowPresenter : IEcsInitSystem, IEcsRunSystem
     {
-        private EcsWorld _world;
-        private GUIResultWindowView _resultWindowView;
-        private MetricsConfiguration _metrics;
-
         private EcsFilter<CShiftOver> _filter;
+        private MetricsConfiguration _metrics;
+        private GUIResultWindowView _resultWindowView;
+        private EcsWorld _world;
 
         public void Init()
         {
             _resultWindowView.Deactivate();
         }
-        
+
         public void Run()
         {
             foreach (var entityId in _filter)
@@ -32,53 +33,64 @@ namespace Meta.MainScene.UI.ResultWindow
                     $"Reputation delta: {CalculateReputation()}",
                     $"Balance delta: {CalculateBalance()}",
                     $"Rent: -{_metrics.DailyRent}",
-                    $"OK",
+                    "OK",
                     OnCloseResultClick
                 );
 
-                _filter.GetEntity(entityId).Del<CShiftOver>();
+                _filter.GetEntity(entityId)
+                    .Del<CShiftOver>();
                 break;
             }
         }
 
         private string CalculateClients()
         {
-            int totalVisitorsPrev = PlayerPrefs.GetInt(MetricsConfiguration.TOTAL_VISITORS_PREV, 0);
-            int totalVisitors = PlayerPrefs.GetInt(MetricsConfiguration.TOTAL_VISITORS, 0);
-            
+            var totalVisitorsPrev = PlayerPrefs.GetInt
+                (MetricsConfiguration.TOTAL_VISITORS_PREV, 0);
+            var totalVisitors = PlayerPrefs.GetInt
+                (MetricsConfiguration.TOTAL_VISITORS, 0);
+
+            PlayerPrefs.SetInt
+                (MetricsConfiguration.TOTAL_VISITORS_PREV, totalVisitors);
+            PlayerPrefs.Save();
             return (totalVisitors - totalVisitorsPrev).ToString();
         }
 
         private string CalculateReputation()
         {
-            int reputationPrev = PlayerPrefs.GetInt(MetricsConfiguration.REPUTATION_PREV, 0);
-            int reputation = ReputationUtils.CalculatePercentage();
-            
+            var reputationPrev = PlayerPrefs.GetInt
+                (MetricsConfiguration.REPUTATION_PREV, 0);
+            var reputation = ReputationUtils.CalculatePercentage();
+
+            PlayerPrefs.SetInt
+                (MetricsConfiguration.REPUTATION_PREV, reputation);
+            PlayerPrefs.Save();
+
             return AddSignIfNeeded(reputation - reputationPrev);
         }
 
         private string CalculateBalance()
         {
-            int totalBalancePrev = PlayerPrefs.GetInt(MetricsConfiguration.TOTAL_BALANCE_PREV, 0);
-            int totalBalance = PlayerPrefs.GetInt(MetricsConfiguration.TOTAL_BALANCE, _metrics.InitialBalance);
+            var totalBalancePrev = PlayerPrefs.GetInt
+                (MetricsConfiguration.TOTAL_BALANCE_PREV, 0);
+            var totalBalance = PlayerPrefs.GetInt
+                (MetricsConfiguration.TOTAL_BALANCE, _metrics.InitialBalance);
 
             return AddSignIfNeeded(totalBalance - totalBalancePrev);
         }
 
         private string AddSignIfNeeded(int value)
         {
-            if (value > 0)
-            {
-                return $"+{value}";
-            }
+            if (value > 0) return $"+{value}";
 
             return value.ToString();
         }
-        
+
         private void OnCloseResultClick()
         {
             _resultWindowView.Deactivate();
-            _world.NewEntity().Get<CReloadSceneRequest>();
+            _world.NewEntity()
+                .Get<CReloadSceneRequest>();
         }
     }
 }
