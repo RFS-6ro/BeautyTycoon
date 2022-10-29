@@ -1,8 +1,10 @@
 using System.Collections.Generic;
-using Meta.MainScene.UI.VisitorChoseMenu.VisitorChoicePanel;
+
+using BT.Meta.MainScene.UI.VisitorChoseMenu.VisitorChoicePanel;
+
 using UnityEngine;
 
-namespace Meta.MainScene.UI.VisitorChoseMenu
+namespace BT.Meta.MainScene.UI.VisitorChoseMenu
 {
     public class GUIVisitorChoiceContainer : MonoBehaviour
     {
@@ -10,7 +12,7 @@ namespace Meta.MainScene.UI.VisitorChoseMenu
 
         private List<GUIVisitorChoiсePanelView> _activePanels;
         private List<GUIVisitorChoiсePanelView> _pooledPanels;
-        
+
         protected void Awake()
         {
             _activePanels = new List<GUIVisitorChoiсePanelView>(3);
@@ -23,10 +25,7 @@ namespace Meta.MainScene.UI.VisitorChoseMenu
 
         public IList<GUIVisitorChoiсePanelView> Show(int number)
         {
-            for (int i = 0; i < number; i++)
-            {
-                CreateOrEnable();
-            }
+            for (var i = 0; i < number; i++) CreateOrEnable();
 
             return _activePanels.AsReadOnly();
         }
@@ -41,16 +40,13 @@ namespace Meta.MainScene.UI.VisitorChoseMenu
         private GUIVisitorChoiсePanelView CreateOrEnable()
         {
             GUIVisitorChoiсePanelView panel;
-            if (_pooledPanels.Count == 0)
-            {
-                panel = Object.Instantiate(_choicePanel, _choicePanel.transform);
-            }
+            if (_pooledPanels.Count == 0) { panel = Instantiate(_choicePanel, _choicePanel.transform); }
             else
             {
                 panel = _pooledPanels[0];
                 _pooledPanels.RemoveAt(0);
             }
-            
+
             panel.Activate();
             _activePanels.Add(panel);
             return panel;

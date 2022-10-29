@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Meta.Common.Environment.World
+namespace BT.Meta.Common.Environment.World
 {
     public struct CWorldTile
     {

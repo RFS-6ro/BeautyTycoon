@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Meta.Common.UI.Input
+namespace BT.Meta.Common.UI.Input
 {
     public struct CTap
     {

@@ -1,24 +1,26 @@
 using System;
 using System.Threading;
+
 using Cysharp.Threading.Tasks;
+
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace BT.Core.UI.View.Loaders
 {
     public class UIAsyncSpriteLoaderWithName : IUIAsyncSpriteLoader
     {
-        private string _name;
-        
+        private readonly string _name;
+
         public UIAsyncSpriteLoaderWithName(string name)
         {
             _name = name;
         }
-        
+
         /// <summary>
-        /// Non Cancellable
+        ///     Non Cancellable
         /// </summary>
-        public async UniTask<Sprite> LoadImageAsync(CancellationToken? token = null)
+        public async UniTask<Sprite> LoadImageAsync
+            (CancellationToken? token = null)
         {
             try
             {
@@ -29,7 +31,10 @@ namespace BT.Core.UI.View.Loaders
             catch (Exception e)
             {
 #if DEBUG
-                Debug.LogError($"{GetType().Name} :: Exception in resource loading : {e}");       
+                Debug.LogError
+                (
+                    $"{GetType().Name} :: Exception in resource loading : {e}"
+                );
 #endif
                 return null;
             }

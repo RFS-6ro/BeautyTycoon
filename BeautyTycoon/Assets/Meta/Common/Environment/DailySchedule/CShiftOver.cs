@@ -1,4 +1,4 @@
-namespace Meta.Common.Environment.DailySchedule
+namespace BT.Meta.Common.Environment.DailySchedule
 {
     public struct CShiftOver { }
 }

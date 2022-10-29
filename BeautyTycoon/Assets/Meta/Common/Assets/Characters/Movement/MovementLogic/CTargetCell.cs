@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Meta.Common.Assets.Characters.MovementLogic
+namespace BT.Meta.Common.Assets.Characters.MovementLogic
 {
     public struct CTargetCell
     {

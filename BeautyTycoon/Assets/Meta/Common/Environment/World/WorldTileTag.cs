@@ -1,6 +1,6 @@
-using UnityEngine;
+using BT.Core.Utils;
 
-namespace Meta.Common.Environment.World
+namespace BT.Meta.Common.Environment.World
 {
-    public class WorldTileTag : MonoBehaviour { }
+    public class WorldTileTag : RaycastTarget { }
 }

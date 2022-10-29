@@ -1,30 +1,37 @@
-using Core.CompositeRoot;
+using BT.Core.CompositeRoot;
+using BT.Meta.Common.Assets.Characters.MovementLogic.CellMovement;
+using BT.Meta.Common.Environment;
+using BT.Meta.Common.Environment.World.Destruction;
+using BT.Meta.Common.World.Creation;
+
 using Leopotam.Ecs;
-using Meta.Common.Assets.Characters.MovementLogic.CellMovement;
-using Meta.Common.Environment;
-using Meta.Common.Environment.World.Destruction;
-using Meta.Common.World.Creation;
+
 using UnityEngine;
 
-namespace Meta.MainScene.CompositeRoot
+namespace BT.Meta.MainScene.CompositeRoot
 {
-    public class MainSceneEnvironmentStartup : IUpdateLogicPartStartup<MainSceneEnvironmentStartup>
+    public class
+        MainSceneEnvironmentStartup :
+            IUpdateLogicPartStartup<MainSceneEnvironmentStartup>
     {
-        public readonly MapMask Mask;
-        public readonly MetricsConfiguration Metrics;
+        public readonly Camera Camera;
         public readonly TileFactory Factory;
         public readonly Grid Grid;
-        
+        public readonly MapMask Mask;
+        public readonly MetricsConfiguration Metrics;
+
         public MainSceneEnvironmentStartup()
         {
+            Camera = Camera.main;
             Mask = Resources.Load<MapMask>(nameof(MapMask));
-            Metrics = Resources.Load<MetricsConfiguration>(nameof(MetricsConfiguration));
+            Metrics = Resources.Load<MetricsConfiguration>
+                (nameof(MetricsConfiguration));
             Factory = new TileFactory();
             Grid = Object.Instantiate(Resources.Load<Grid>("Isometric Grid"));
-            
+
             CellUtils.Initialize(Grid, Mask);
         }
-        
+
         public MainSceneEnvironmentStartup AddUpdateSystems(EcsSystems systems)
         {
             systems
@@ -33,11 +40,11 @@ namespace Meta.MainScene.CompositeRoot
                 .Inject(Mask)
                 .Inject(Factory)
                 .Inject(Grid);
-            
+
             new MainSceneMetricsStartup()
                 .AddUpdateSystems(systems);
-            
-            new MainSceneWorkingToolsStartup()
+
+            new MainSceneWorkingToolsStartup(Camera, Mask, Grid)
                 .AddUpdateSystems(systems);
 
             return this;

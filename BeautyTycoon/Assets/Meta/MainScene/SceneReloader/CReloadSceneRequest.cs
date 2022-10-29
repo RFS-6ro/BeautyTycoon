@@ -1,4 +1,4 @@
-namespace Meta.MainScene.SceneReloader
+namespace BT.Meta.MainScene.SceneReloader
 {
     public struct CReloadSceneRequest { }
 }

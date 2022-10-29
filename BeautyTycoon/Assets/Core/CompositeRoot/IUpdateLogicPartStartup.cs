@@ -1,6 +1,6 @@
 using Leopotam.Ecs;
 
-namespace Core.CompositeRoot
+namespace BT.Core.CompositeRoot
 {
     public interface IUpdateLogicPartStartup<T> : ILogicPart
         where T : IUpdateLogicPartStartup<T>

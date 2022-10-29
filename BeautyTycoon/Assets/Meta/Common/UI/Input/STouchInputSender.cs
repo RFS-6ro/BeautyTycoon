@@ -1,19 +1,29 @@
+using BT.Meta.Common.Assets.Characters.MainCharacter;
+
 using Leopotam.Ecs;
-using Meta.Common.Assets.Characters.MainCharacter;
+
 using UnityEngine;
 
-namespace Meta.Common.UI.Input
+namespace BT.Meta.Common.UI.Input
 {
     public class STouchInputSender : IEcsInitSystem, IEcsDestroySystem
     {
-        private PanelTouchInputListener _panelTouchInputListener;
-        
         private EcsFilter<CTouchInputListener> _filter;
+        private PanelTouchInputListener _panelTouchInputListener;
+
+        public void Destroy()
+        {
+            if (!_panelTouchInputListener) return;
+
+            _panelTouchInputListener.OnClickEvent -= HandleSimpleClickEvent;
+            _panelTouchInputListener.OnDoubleClickEvent -=
+                HandleDoubleClickEvent;
+        }
 
         public void Init()
         {
-            if (_panelTouchInputListener == null) { return; }
-            
+            if (_panelTouchInputListener == null) return;
+
             _panelTouchInputListener.OnClickEvent += HandleSimpleClickEvent;
             _panelTouchInputListener.OnDoubleClickEvent += HandleDoubleClickEvent;
         }
@@ -22,7 +32,8 @@ namespace Meta.Common.UI.Input
         {
             foreach (var entityId in _filter)
             {
-                ref CTap tap = ref _filter.GetEntity(entityId).Get<CTap>();
+                ref var tap = ref _filter.GetEntity(entityId)
+                    .Get<CTap>();
                 tap.Position = position;
             }
         }
@@ -31,17 +42,10 @@ namespace Meta.Common.UI.Input
         {
             foreach (var entityId in _filter)
             {
-                ref CDoubleTap doubleTap = ref _filter.GetEntity(entityId).Get<CDoubleTap>();
+                ref var doubleTap = ref _filter.GetEntity(entityId)
+                    .Get<CDoubleTap>();
                 doubleTap.Position = position;
             }
-        }
-
-        public void Destroy()
-        {
-            if (!_panelTouchInputListener) { return; }
-            
-            _panelTouchInputListener.OnClickEvent -= HandleSimpleClickEvent;
-            _panelTouchInputListener.OnDoubleClickEvent -= HandleDoubleClickEvent;
         }
     }
 }

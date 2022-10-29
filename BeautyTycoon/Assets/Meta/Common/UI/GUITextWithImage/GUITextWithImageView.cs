@@ -1,21 +1,48 @@
 using System;
+
 using BT.Core.UI.View;
 using BT.Core.UI.View.Loaders;
-using Core.Utils;
+using BT.Core.Utils;
+
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Meta.Common.UI.GUITextWithImage
+namespace BT.Meta.Common.UI.GUITextWithImage
 {
     public class GUITextWithImageView : UIView, IUIHandleInput
     {
         [SerializeField] private Button _button;
         [SerializeField] private Image _container;
         [SerializeField] private Text _text;
-        
+
         private AsyncUIImage _image;
-        
+
         private Action _onClick;
+
+        private void OnEnable()
+        {
+            AddInputListener();
+        }
+
+        private void OnDisable()
+        {
+            RemoceInputListener();
+        }
+
+        private void OnDestroy()
+        {
+            _image.Dispose();
+        }
+
+        public void AddInputListener()
+        {
+            _button.onClick.AddListener(OnClick);
+        }
+
+        public void RemoceInputListener()
+        {
+            _button.onClick.RemoveListener(OnClick);
+        }
 
         protected override void OnAwake()
         {
@@ -27,28 +54,19 @@ namespace Meta.Common.UI.GUITextWithImage
             _image = new AsyncUIImage(_container);
         }
 
-        private void OnEnable()
-        {
-            AddInputListener();
-        }
-        
-        public void AddInputListener()
-        {
-            _button.onClick.AddListener(OnClick);
-        }
-        
-        public void ShowWithAction(string assetName, string text, Action onClick)
+        public void ShowWithAction
+            (string assetName, string text, Action onClick)
         {
             ShowImage(assetName);
             ShowWithAction(onClick);
             ShowText(text);
         }
-        
+
         public void ShowWithAction(string assetName, Action onClick)
         {
             ShowImage(assetName);
             ShowWithAction(onClick);
-            ShowText(String.Empty);
+            ShowText(string.Empty);
         }
 
         public void ShowImage(string assetName)
@@ -60,7 +78,7 @@ namespace Meta.Common.UI.GUITextWithImage
         {
             _text.text = text;
         }
-        
+
         public void ShowWithAction(Action onClick)
         {
             _onClick = onClick;
@@ -69,21 +87,6 @@ namespace Meta.Common.UI.GUITextWithImage
         private void OnClick()
         {
             _onClick.SafeInvoke();
-        }
-
-        private void OnDisable()
-        {
-            RemoceInputListener();
-        }
-        
-        public void RemoceInputListener()
-        {
-            _button.onClick.RemoveListener(OnClick);
-        }
-
-        private void OnDestroy()
-        {
-            _image.Dispose();
         }
     }
 }

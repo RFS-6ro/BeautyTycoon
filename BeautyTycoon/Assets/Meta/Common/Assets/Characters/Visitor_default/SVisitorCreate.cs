@@ -1,35 +1,24 @@
-using BT.Meta.Common.Characters;
 using Leopotam.Ecs;
+
 using UnityEngine;
 
-namespace Meta.Common.Assets.Characters.Visitor_default
+namespace BT.Meta.Common.Assets.Characters.Visitor_default
 {
     public class SVisitorCreate : IEcsInitSystem, IEcsRunSystem
     {
         private const int MAX_CHOISE_DATA = 3;
-        
-        private EcsWorld _world;
-        
+        private EcsFilter<CRequestDeleteVisitor> _deleteVisitorRequestFilter;
+
         private GameObject _visitor;
         private EcsEntity _visitorEntity;
 
         private EcsFilter<CRequestVisitor> _visitorRequestFilter;
-        private EcsFilter<CRequestDeleteVisitor> _deleteVisitorRequestFilter;
+
+        private EcsWorld _world;
 
         public void Init()
         {
             CreateVisitor();
-        }
-
-        private void CreateVisitor()
-        {
-            _visitor = Object.Instantiate(Resources.Load<GameObject>("Visitor_default"));
-            _visitorEntity = _world.NewEntity();
-
-            ref CUnit unit = ref _visitorEntity.Get<CUnit>();
-            unit.Transform = _visitor.transform;
-            
-            _visitor.SetActive(false);
         }
 
         public void Run()
@@ -40,15 +29,28 @@ namespace Meta.Common.Assets.Characters.Visitor_default
                 _visitor.SetActive(false);
                 break;
             }
-            
+
             foreach (var entityId in _visitorRequestFilter)
             {
-                ref CChoiceVariant choiceVariant = ref _visitorEntity.Get<CChoiceVariant>();
+                ref var choiceVariant =
+                    ref _visitorEntity.Get<CChoiceVariant>();
                 choiceVariant.ChosenData = Random.Range(0, MAX_CHOISE_DATA);
                 choiceVariant.MaxChoiceData = MAX_CHOISE_DATA;
                 _visitor.SetActive(true);
                 break;
             }
+        }
+
+        private void CreateVisitor()
+        {
+            _visitor = Object.Instantiate
+                (Resources.Load<GameObject>("Visitor_default"));
+            _visitorEntity = _world.NewEntity();
+
+            ref var unit = ref _visitorEntity.Get<CUnit>();
+            unit.Transform = _visitor.transform;
+
+            _visitor.SetActive(false);
         }
     }
 }
